@@ -64,3 +64,23 @@ def recieve_id_from_db():
     connection.close()
 
     return str(id)
+
+
+def check_status(id): #should only use resources when ping is lost
+
+    connection = try_connection()
+    cursor = connection.cursor()
+
+    query = ("SELECT status FROM  `assosiate_location_with_id` WHERE  `id` =" + id)
+
+    cursor.execute(query)
+
+    result = cursor.fetchone()
+
+    outcome = result[0]
+
+    if(outcome == '0'):
+        return True
+
+    else:
+        return False
