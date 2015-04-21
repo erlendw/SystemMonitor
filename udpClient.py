@@ -2,13 +2,14 @@ import string
 __author__ = 'erlend'
 from time import sleep as zzz
 import socket
+import pickle
 
 
 server_ip = '178.62.12.142'
 server_port = 5000
 
 
-def setLocation():
+def give_id():
 
     while True:
         location = input('Where is this recorder located? ')
@@ -56,7 +57,15 @@ def communicate_with_server():
 
     first_start_up = '0'
 
-    location = setLocation()
+    try:
+
+        location_id = pickle.load(open('id.p','rb'))
+        first_start_up ='1'
+
+    except Exception as e:
+
+        location_id = give_id()
+
     ip_host_of_client = getLocalIp()
     port_to_try = 5000 #will be auto assigned if occupied by another system
 
@@ -66,14 +75,16 @@ def communicate_with_server():
     s.bind((ip_host_of_client,port_to_try))
 
     while True:
-        message = str.encode(location + ',' + first_start_up)
+        message = str.encode(location_id + ',' + first_start_up)
         s.sendto(message,server)
         print('Local ip is: ' + ip_host_of_client)
 
         if(first_start_up == '0'):
-            id, addr = s.recvfrom(1024)
-            id = bytes.decode(id)
-            print('server svarte med id: ' + id)
+            location_id, addr = s.recvfrom(1024)
+            location_id = bytes.decode(location_id)
+            print(location_id)
+            pickle.dump(location_id,open('id.p', 'wb'))
+            print('server svarte med id: ' + location_id)
 
         first_start_up = '1'
 
