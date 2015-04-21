@@ -8,7 +8,7 @@ from mysql.connector import errorcode as mysql_error
 
 host_of_db = 'localhost'
 user_log_in = 'root'
-user_password = '***'
+user_password = '****'
 name_of_db = 'location_id'
 
 

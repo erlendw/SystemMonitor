@@ -37,7 +37,7 @@ def recieve_data_from_client(local_socket):
         if(is_true == '0'):
             id_database.send_to_id_db(location)
             location_id = id_database.recieve_id_from_db()
-            print(location_id)
+            local_socket.sendto(str.encode(location_id),addr)
 
         print(location + " is active at public ip " + str(addr))
 

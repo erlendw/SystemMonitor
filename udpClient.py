@@ -52,9 +52,9 @@ def getLocalIp():
 
     return ip
 
-def tellServerYouAreUp():
+def communicate_with_server():
 
-    firs_start_up = '0'
+    first_start_up = '0'
 
     location = setLocation()
     ip_host_of_client = getLocalIp()
@@ -66,17 +66,24 @@ def tellServerYouAreUp():
     s.bind((ip_host_of_client,port_to_try))
 
     while True:
-        message = str.encode(location + ',' + firs_start_up)
+        message = str.encode(location + ',' + first_start_up)
         s.sendto(message,server)
         print('Local ip is: ' + ip_host_of_client)
+
+        if(first_start_up == '0'):
+            id, addr = s.recvfrom(1024)
+            id = bytes.decode(id)
+            print('server svarte med id: ' + id)
+
+        first_start_up = '1'
+
         zzz(3)
-        firs_start_up = '1'
 
     s.close()
 
 def Main():
 
-    tellServerYouAreUp()
+    communicate_with_server()
 
 
 if __name__ == '__main__':
