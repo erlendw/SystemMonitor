@@ -8,18 +8,18 @@ from mysql.connector import errorcode as mysql_error
 
 host_of_db = 'localhost'
 user_log_in = 'root'
-user_password = '***********'
+user_password = '***'
 name_of_db = 'location_id'
 
 
 
 
 
-def try_connection(location):
+def try_connection():
 
     try:
         connection = mysql_conn.connect(user=user_log_in,password=user_password,host=host_of_db,database=name_of_db)
-        sendTo(connection,location)
+        return connection
     except mysql_conn.Error as err:
         if err.errno == mysql_error.ER_ACCESS_DENIED_ERROR:
             print("Something is wrong with your user name or password")
@@ -32,13 +32,14 @@ def try_connection(location):
         connection.close()
 
 
-def sendTo(connection,location):
+def send_to_id_db(location):
 
+    connection = try_connection()
     cursor = connection.cursor()
 
 
     add_location = ("INSERT INTO assosiate_location_with_id" " (location,id) "  "VALUES (%s,%s)")
-    data_location = (location, 'NULL') #location må være dynamisk
+    data_location = (location, 'NULL') #location has to be dynamic
 
     cursor.execute(add_location, data_location)
     connection.commit()

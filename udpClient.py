@@ -54,6 +54,8 @@ def getLocalIp():
 
 def tellServerYouAreUp():
 
+    firs_start_up = '0'
+
     location = setLocation()
     ip_host_of_client = getLocalIp()
     port_to_try = 5000 #will be auto assigned if occupied by another system
@@ -64,10 +66,11 @@ def tellServerYouAreUp():
     s.bind((ip_host_of_client,port_to_try))
 
     while True:
-        message = str.encode(location)
+        message = str.encode(location + ',' + firs_start_up)
         s.sendto(message,server)
         print('Local ip is: ' + ip_host_of_client)
         zzz(3)
+        firs_start_up = '1'
 
     s.close()
 

@@ -3,37 +3,49 @@ __author__ = 'erlend'
 import socket
 import id_db as id_database
 
-def Main():
+#variables for server
+host = '178.62.12.142'
+port = 5000
 
-    id_database.try_connection()
 
-    host = '178.62.12.142'
-    port = 5000
+def bind_socket():
 
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    s.bind((host,port))
+    print ("starter bind socket")
+    local_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    print ("socket.socket")
+    local_socket.bind((host,port))
+    print ("bind")
+    recieve_data_from_client(local_socket)
+
+def recieve_data_from_client(local_socket):
 
     print ("server has started")
-    while True:
-        data, addr = s.recvfrom(1024)
 
+    while True:
+
+        data, addr = local_socket.recvfrom(1024)
         data = bytes.decode(data)
 
-        if(countDown(data)):
-            print(data + " is active at public ip " + str(addr))
-        else:
-            continue
+        to_check = data.split(',')
+
+        location = to_check[0]
+        is_true = to_check[1]
 
 
+        if(is_true == '0'):
+            id_database.send_to_id_db(location)
 
+        print(location + " is active at public ip " + str(addr))
 
+    local_socket.close()
 
-    s.close()
+def pass_data_to_id_db(data):
 
+    id_database.try_connection(data)
 
-def countDown(recieved):
-    return True
+def Main():
 
+    bind_socket()
 
 if __name__ == '__main__':
     Main()
