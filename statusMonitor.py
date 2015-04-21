@@ -6,16 +6,17 @@ import id_db
 
 
 def confirm_status(id):
-    zzz(4) #has to be greater than ping rate
+    zzz(3) #has to be greater than ping rate
     #if(statuschange)
 
     print('vi kom hit!')
 
     counter = 0
 
-    while(counter>100):
-        zzz(0.1)
-        if(id == udpServer.getLocation_id()):
+    while True:
+        print('Im worth while')
+        zzz(4)
+        if(id == ):
             print('we have a new ping!')
             break
         counter += 1

@@ -9,9 +9,6 @@ from threading import Thread
 host = '178.62.12.142'
 port = 5000
 
-location_id = ''
-
-
 def bind_socket():
 
     local_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -43,16 +40,18 @@ def recieve_data_from_client(local_socket):
 
             isActive = id_database.check_status(location_id)
 
-            if not (isActive):
+            if not isActive and location_id != '0':
 
+                print('activity from location: ' + location_id)
                 print('need for new thread')
-                id_database.update_status_of_location(location_id, '1')
                 t = Thread(target=statusMonitor.confirm_status,args=(location_id))
                 t.start()
 
+        l
 
 
-            print(location_id + " is active at public ip " + str(addr))
+
+
 
 
 
@@ -62,8 +61,6 @@ def pass_data_to_id_db(data):
 
     id_database.try_connection(data)
 
-def getLocation_id():
-    return location_id
 
 def Main():
 

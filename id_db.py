@@ -85,7 +85,7 @@ def check_status(id): #should only use resources when ping is lost
     else:
         return True
 
-def update_status_of_location(location, value):
+def update__time(location, value):
 
     connection = try_connection()
     cursor = connection.cursor()
