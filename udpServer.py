@@ -23,6 +23,8 @@ def recieve_data_from_client(local_socket):
 
     while True:
 
+        location_id = ''
+
         data, addr = local_socket.recvfrom(1024)
         data = bytes.decode(data)
 
@@ -34,6 +36,8 @@ def recieve_data_from_client(local_socket):
 
         if(is_true == '0'):
             id_database.send_to_id_db(location)
+            location_id = id_database.recieve_id_from_db()
+            print(location_id)
 
         print(location + " is active at public ip " + str(addr))
 

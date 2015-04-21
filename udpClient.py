@@ -15,7 +15,7 @@ def setLocation():
         confirmation = input('Retype location ' + location + ' to confirm: ')
 
         if(str.upper(location) == str.upper(confirmation)):
-            if(str.upper(input('is the location ' + location + ' correct? Y/N ')) == 'Y'):
+            if(str.upper(input('is the location ' + str.upper(location) + ' correct? Y/N ')) == 'Y'):
                 break
             else:
                 print('\nRestarting input procedure\n')

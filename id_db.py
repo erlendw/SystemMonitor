@@ -47,5 +47,20 @@ def send_to_id_db(location):
     cursor.close()
     connection.close()
 
-def recieveFrom():
-    print('')
+def recieve_id_from_db():
+    connection = try_connection()
+    cursor = connection.cursor()
+
+    query = ("SELECT COUNT(*) FROM assosiate_location_with_id")
+
+    cursor.execute(query)
+
+    result = cursor.fetchone()
+    id = result[0]
+
+    print(id)
+
+    cursor.close()
+    connection.close()
+
+    return str(id)
