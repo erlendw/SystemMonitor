@@ -81,7 +81,7 @@ def testIp():
 
 def communicate_with_server():
 
-    first_start_up = testIp()
+    first_itteration = testIp()
 
     ip_host_of_client = getLocalIp()
     port_to_try = 5000 #will be auto assigned if occupied by another system
@@ -91,26 +91,33 @@ def communicate_with_server():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     s.bind((ip_host_of_client,port_to_try))
 
-    if(first_start_up):
+    if(first_itteration):
+
         location_id = give_id()
         put_in_db = '0'
-    if not (first_start_up):
+
+    if not (first_itteration):
+
         location_id = pickle.load(open('id.p','rb'))
-        put_in_db = '0'
+        put_in_db = '1'
+
     while True:
 
         message = str.encode(location_id + ',' + put_in_db)
         s.sendto(message,server)
         print('Local ip is: ' + ip_host_of_client)
 
-        if(first_start_up):
+        if(first_itteration):
+            put_in_db = '1' #Tells server not to ubdate db
+            first_itteration = False #we are no longer on first itteration
+
             location_id, addr = s.recvfrom(1024)
             location_id = bytes.decode(location_id)
-            print(location_id)
+
             pickle.dump(location_id,open('id.p', 'wb'))
             print('server svarte med id: ' + location_id)
 
-        put_in_db = '1'
+
 
         zzz(3)
 

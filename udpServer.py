@@ -23,8 +23,6 @@ def recieve_data_from_client(local_socket):
 
     while True:
 
-        location_id = ''
-
         data, addr = local_socket.recvfrom(1024)
         data = bytes.decode(data)
 
