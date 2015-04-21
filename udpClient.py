@@ -11,11 +11,11 @@ server_port = 5000
 def setLocation():
 
     while True:
-        location = input('Where is this recorder located?')
-        confirmation = input('Please confirm')
+        location = input('Where is this recorder located? ')
+        confirmation = input('Retype location ' + location + ' to confirm: ')
 
         if(str.upper(location) == str.upper(confirmation)):
-            if(str.upper(input('is the location ' + location + " correct? Y/N")) == 'Y'):
+            if(str.upper(input('is the location ' + location + ' correct? Y/N ')) == 'Y'):
                 break
             else:
                 continue
