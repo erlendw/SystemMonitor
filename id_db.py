@@ -8,7 +8,7 @@ from mysql.connector import errorcode as mysql_error
 
 host_of_db = 'localhost'
 user_log_in = 'root'
-user_password = '****'
+user_password = '***'
 name_of_db = 'location_id'
 
 
@@ -77,9 +77,10 @@ def check_status(id): #should only use resources when ping is lost
 
     result = cursor.fetchone()
 
-    outcome = result[0]
+    outcome = str(result[0])
 
     if(outcome == '0'):
+        print('start a new monitoring thread')
         return True
 
     else:

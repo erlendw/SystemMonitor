@@ -28,16 +28,21 @@ def recieve_data_from_client(local_socket):
 
         to_check = data.split(',')
 
-        location = to_check[0]
+        location_id = to_check[0]
         is_true = to_check[1]
 
 
         if(is_true == '0'):
             id_database.send_to_id_db(location)
             location_id = id_database.recieve_id_from_db()
+            print('\n' + location_id + " was accepted to the database\n")
             local_socket.sendto(str.encode(location_id),addr)
 
-        print(location + " is active at public ip " + str(addr))
+        else:
+            id_database.check_status(location_id)
+            print(location_id + " is active at public ip " + str(addr))
+
+
 
     local_socket.close()
 
