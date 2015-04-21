@@ -1,8 +1,12 @@
 __author__ = 'erlend'
 
 import socket
+import id_db as id_database
 
 def Main():
+
+    id_database.try_connection()
+
     host = '178.62.12.142'
     port = 5000
 
