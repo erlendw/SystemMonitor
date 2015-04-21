@@ -80,8 +80,22 @@ def check_status(id): #should only use resources when ping is lost
     outcome = str(result[0])
 
     if(outcome == '0'):
-        print('start a new monitoring thread')
-        return True
+        return False
 
     else:
-        return False
+        return True
+
+def update_status_of_location(location, value):
+
+    connection = try_connection()
+    cursor = connection.cursor()
+
+
+    insert_new_bool = ("UPDATE assosiate_location_with_id SET status = %s WHERE id = %s ")
+    data_location = (value,location) #location has to be dynamic
+
+    cursor.execute(insert_new_bool, (location,value))
+    connection.commit()
+
+    cursor.close()
+    connection.close()

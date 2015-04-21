@@ -2,24 +2,25 @@ __author__ = 'erlend'
 
 import socket
 import id_db as id_database
+import statusMonitor
+from threading import Thread
 
 #variables for server
 host = '178.62.12.142'
 port = 5000
 
+location_id = ''
+
 
 def bind_socket():
 
-    print ("starter bind socket")
     local_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    print ("socket.socket")
     local_socket.bind((host,port))
-    print ("bind")
     recieve_data_from_client(local_socket)
 
 def recieve_data_from_client(local_socket):
 
-    print ("server has started")
+    print ("\n\n\nserver has started\n\n\n")
 
     while True:
 
@@ -33,13 +34,24 @@ def recieve_data_from_client(local_socket):
 
 
         if(is_true == '0'):
-            id_database.send_to_id_db(location)
+            id_database.send_to_id_db(location_id)
             location_id = id_database.recieve_id_from_db()
             print('\n' + location_id + " was accepted to the database\n")
             local_socket.sendto(str.encode(location_id),addr)
 
         else:
-            id_database.check_status(location_id)
+
+            isActive = id_database.check_status(location_id)
+
+            if not (isActive):
+
+                print('need for new thread')
+                id_database.update_status_of_location(location_id, '1')
+                t = Thread(target=statusMonitor.confirm_status,args=(location_id))
+                t.start()
+
+
+
             print(location_id + " is active at public ip " + str(addr))
 
 
@@ -49,6 +61,9 @@ def recieve_data_from_client(local_socket):
 def pass_data_to_id_db(data):
 
     id_database.try_connection(data)
+
+def getLocation_id():
+    return location_id
 
 def Main():
 
