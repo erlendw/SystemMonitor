@@ -18,9 +18,22 @@ def setLocation():
             if(str.upper(input('is the location ' + location + ' correct? Y/N ')) == 'Y'):
                 break
             else:
+                print('\nRestarting input procedure\n')
+                zzz(0.3)
+                print('.')
+                zzz(0.3)
+                print('.')
+                zzz(0.3)
+                print('.\n')
                 continue
 
-        print('\nPlease make sure your first and second input matches')
+        print('\n************Please make sure your first and second input matches************\n')
+        zzz(0.3)
+        print('.')
+        zzz(0.3)
+        print('.')
+        zzz(0.3)
+        print('.\n')
 
     return location
 
