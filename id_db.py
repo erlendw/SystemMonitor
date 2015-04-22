@@ -32,14 +32,14 @@ def try_connection():
         connection.close()
 
 
-def send_to_id_db(location):
+def send_id_to_id_db(location):
 
     connection = try_connection()
     cursor = connection.cursor()
 
 
-    add_location = ("INSERT INTO assosiate_location_with_id" " (location,id) "  "VALUES (%s,%s)")
-    data_location = (location, 'NULL') #location has to be dynamic
+    add_location = ("INSERT INTO assosiate_location_with_id" " (location,id,status,time) "  "VALUES (%s,%s,%s,%s)")
+    data_location = (location, 'NULL', '0','0') #location has to be dynamic
 
     cursor.execute(add_location, data_location)
     connection.commit()
@@ -65,6 +65,20 @@ def recieve_id_from_db():
 
     return str(id)
 
+def check_time(id): #should only use resources when ping is lost
+
+    connection = try_connection()
+    cursor = connection.cursor()
+
+    query = ("SELECT time FROM  `assosiate_location_with_id` WHERE  `id` =" + id)
+
+    cursor.execute(query)
+
+    result = cursor.fetchone()
+
+    outcome = str(result[0])
+
+    return outcome
 
 def check_status(id): #should only use resources when ping is lost
 
@@ -85,7 +99,22 @@ def check_status(id): #should only use resources when ping is lost
     else:
         return True
 
-def update__time(location, value):
+def update__time(location, time):
+
+    connection = try_connection()
+    cursor = connection.cursor()
+
+
+    insert_new_bool = ("UPDATE assosiate_location_with_id SET time = %s WHERE id = %s ")
+    data_location = (time,location) #location has to be dynamic
+
+    cursor.execute(insert_new_bool, data_location)
+    connection.commit()
+
+    cursor.close()
+    connection.close()
+
+def update__status(location, value):
 
     connection = try_connection()
     cursor = connection.cursor()
@@ -94,7 +123,7 @@ def update__time(location, value):
     insert_new_bool = ("UPDATE assosiate_location_with_id SET status = %s WHERE id = %s ")
     data_location = (value,location) #location has to be dynamic
 
-    cursor.execute(insert_new_bool, (location,value))
+    cursor.execute(insert_new_bool, data_location)
     connection.commit()
 
     cursor.close()

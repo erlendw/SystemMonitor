@@ -3,26 +3,39 @@ __author__ = 'erlend'
 from time import sleep as zzz
 import udpServer
 import id_db
+import datetime
+
 
 
 def confirm_status(id):
-    zzz(3) #has to be greater than ping rate
-    #if(statuschange)
-
-    print('vi kom hit!')
-
-    counter = 0
 
     while True:
-        print('Im worth while')
-        zzz(4)
-        if(id == ):
-            print('we have a new ping!')
-            break
-        counter += 1
 
-    if(counter>100):
-        print('the ping is gone, update database')
-        id_db.update_status_of_location(id, '0')
-    #i was pinged with this number
-    #now i expect the same number within 5 seconds
+        current_system_time = datetime.datetime.now()
+        current_system_time = (current_system_time.strftime('%H%M'))
+
+        last_ping_time = id_db.check_time(id)
+
+        result = int(current_system_time) - int(last_ping_time)
+
+        print('Time scince last ping from ' + id + ' is ' + str(result) + ' minute(s)')
+
+        if(result>=1):
+            zzz(3)
+            print(current_system_time)
+            zzz(3)
+            print('\n' + last_ping_time)
+            zzz(3)
+            print('breaking while')
+
+            break
+
+        zzz(5)
+
+        print('thread for id: ' + id + ' is still running')
+
+    print('Client ' + id + ' is down!')
+    id_db.update__status(id,'0')
+
+
+

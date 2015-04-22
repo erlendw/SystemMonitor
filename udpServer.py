@@ -4,6 +4,7 @@ import socket
 import id_db as id_database
 import statusMonitor
 from threading import Thread
+import datetime
 
 #variables for server
 host = '178.62.12.142'
@@ -31,23 +32,43 @@ def recieve_data_from_client(local_socket):
 
 
         if(is_true == '0'):
-            id_database.send_to_id_db(location_id)
+            id_database.send_id_to_id_db(location_id)
             location_id = id_database.recieve_id_from_db()
+
+            time_now = datetime.datetime.now()
+            time_now = (time_now.strftime('%H%M'))
+
             print('\n' + location_id + " was accepted to the database\n")
             local_socket.sendto(str.encode(location_id),addr)
+
+            id_database.update__time(location_id,time_now)
 
         else:
 
             isActive = id_database.check_status(location_id)
 
-            if not isActive and location_id != '0':
+            if not isActive:
 
                 print('activity from location: ' + location_id)
                 print('need for new thread')
+
+                time_now = datetime.datetime.now()
+                time_now = (time_now.strftime('%H%M'))
+
+                id_database.update__status(location_id,'1')
+                id_database.update__time(location_id,time_now)
+
                 t = Thread(target=statusMonitor.confirm_status,args=(location_id))
                 t.start()
 
-        l
+            if isActive:
+
+                time_now = datetime.datetime.now()
+                time_now = (time_now.strftime('%H%M'))
+
+                id_database.update__time(location_id,time_now)
+
+
 
 
 
