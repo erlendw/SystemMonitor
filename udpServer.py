@@ -10,15 +10,25 @@ import datetime
 host = '178.62.12.142'
 port = 5000
 
+def welcomeMessage():
+    print ("\n\n\nWelcome to <SYSTEM MONITOR> <v1.0.0>\n\n\n")
+
 def bind_socket():
 
     local_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     local_socket.bind((host,port))
-    recieve_data_from_client(local_socket)
+
+    return local_socket
+
+def getCurrentTime():
+
+        time_now = datetime.datetime.now()
+        time_now = (time_now.strftime('%S'))
+
+        return time_now
 
 def recieve_data_from_client(local_socket):
 
-    print ("\n\n\nserver has started\n\n\n")
 
     while True:
 
@@ -35,13 +45,10 @@ def recieve_data_from_client(local_socket):
             id_database.send_id_to_id_db(location_id)
             location_id = id_database.recieve_id_from_db()
 
-            time_now = datetime.datetime.now()
-            time_now = (time_now.strftime('%H%M'))
-
             print('\n' + location_id + " was accepted to the database\n")
             local_socket.sendto(str.encode(location_id),addr)
 
-            id_database.update__time(location_id,time_now)
+            id_database.update__time(location_id,getCurrentTime())
 
         else:
 
@@ -49,31 +56,15 @@ def recieve_data_from_client(local_socket):
 
             if not isActive:
 
-                print('activity from location: ' + location_id)
-                print('need for new thread')
-
-                time_now = datetime.datetime.now()
-                time_now = (time_now.strftime('%H%M'))
-
                 id_database.update__status(location_id,'1')
-                id_database.update__time(location_id,time_now)
+                id_database.update__time(location_id,getCurrentTime())
 
                 t = Thread(target=statusMonitor.confirm_status,args=(location_id))
                 t.start()
 
             if isActive:
 
-                time_now = datetime.datetime.now()
-                time_now = (time_now.strftime('%H%M'))
-
-                id_database.update__time(location_id,time_now)
-
-
-
-
-
-
-
+                id_database.update__time(location_id,getCurrentTime())
 
 
     local_socket.close()
@@ -85,7 +76,9 @@ def pass_data_to_id_db(data):
 
 def Main():
 
-    bind_socket()
+    welcomeMessage()
+    recieve_data_from_client(bind_socket())
+
 
 if __name__ == '__main__':
     Main()
