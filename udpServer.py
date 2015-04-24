@@ -38,10 +38,16 @@ def recieve_data_from_client(local_socket):
         to_check = data.split(',')
 
         location_id = to_check[0]
-        is_true = to_check[1]
+        first_itteration = to_check[1]
+        task_status = to_check[3]
+
+        if(task_status == '1'):
+            id_database.update__status__program(location_id,'1')
+        elif(task_status == '0'):
+            id_database.update__status__program(location_id,'0')
 
 
-        if(is_true == '0'):
+        if(first_itteration == '0'):
             id_database.send_id_to_id_db(location_id)
             location_id = id_database.recieve_id_from_db()
 

@@ -120,7 +120,22 @@ def update__status(location, value):
     cursor = connection.cursor()
 
 
-    insert_new_bool = ("UPDATE assosiate_location_with_id SET status = %s WHERE id = %s ")
+    insert_new_bool = ("UPDATE assosiate_location_with_id SET computer_status = %s WHERE id = %s ")
+    data_location = (value,location) #location has to be dynamic
+
+    cursor.execute(insert_new_bool, data_location)
+    connection.commit()
+
+    cursor.close()
+    connection.close()
+
+def update__status__program(location, value):
+
+    connection = try_connection()
+    cursor = connection.cursor()
+
+
+    insert_new_bool = ("UPDATE assosiate_location_with_id SET program_status = %s WHERE id = %s ")
     data_location = (value,location) #location has to be dynamic
 
     cursor.execute(insert_new_bool, data_location)
