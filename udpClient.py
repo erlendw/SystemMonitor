@@ -3,6 +3,8 @@ __author__ = 'erlend'
 from time import sleep as zzz
 import socket
 import pickle
+import subprocess
+import re
 
 
 server_ip = '178.62.12.142'
@@ -39,7 +41,6 @@ def give_id():
 
     return location
 
-
 def getLocalIp():
 
     computer_name = socket.gethostname()
@@ -53,9 +54,6 @@ def getLocalIp():
         ip = list_of_ip[0]
 
     return ip
-
-
-
 
 def testIp():
 
@@ -78,6 +76,29 @@ def testIp():
     elif(old_ip == current_ip):
 
         return False
+
+def findRunningProcesses():
+    processList = []
+
+    cmd = 'WMIC PROCESS get Caption'
+    proc = subprocess.Popen(cmd, shell=True, stdout=subprocess.PIPE)
+
+    for line in proc.stdout:
+        line = bytes.decode(line)
+        line = re.sub(r'\s+', '', line)
+        processList.append(line)
+
+    return processList
+
+def testForProcess():
+
+    processList = findRunningProcesses()
+
+    for i in range(len(processList)):
+        if(processList[i] == 'chrome.exe'): #process is hardcoded for now
+            return True
+
+    return False
 
 def communicate_with_server():
 
@@ -103,9 +124,19 @@ def communicate_with_server():
 
     while True:
 
-        message = str.encode(location_id + ',' + put_in_db)
+        program_is_running = testForProcess()
+
+        if(program_is_running):
+            isRunning = '1'
+
+        if not(program_is_running):
+            isRunning = '0'
+
+        message = str.encode(location_id + ',' + put_in_db + ',' + isRunning)
+
         s.sendto(message,server)
-        print('Local ip is: ' + ip_host_of_client)
+
+        print(message)
 
         if(first_itteration):
             put_in_db = '1' #Tells server not to ubdate db
@@ -125,6 +156,7 @@ def communicate_with_server():
 
 def Main():
 
+    findRunningProcesses()
     communicate_with_server()
 
 
