@@ -17,20 +17,16 @@ def confirm_status(id):
 
         result = int(current_system_time) - int(last_ping_time)
 
-        if(result < 0): # when system time is 1 and last ping is 59
-            result = 1
-
         print('Time scince last ping from ' + id + ' is ' + str(result) + ' second(s)')
 
         if(result>=10):
-            print('breaking while')
-
             break
 
         zzz(1)
 
-    print('CLIENT WITH ' + id + ' IS DOWN!')
+    print('CLIENT WITH ID: ' + id + ' IS DOWN!')
     id_db.update__status(id,'0')
+    id_db.update__status__program(id,'0')
 
 
 

@@ -10,8 +10,6 @@ import re
 server_ip = '178.62.12.142'
 server_port = 5000
 
-
-
 def give_id():
 
     while True:
@@ -95,7 +93,7 @@ def testForProcess():
     processList = findRunningProcesses()
 
     for i in range(len(processList)):
-        if(processList[i] == 'chrome.exe'): #process is hardcoded for now
+        if(processList[i] == 'vlc.exe'): #process is hardcoded for now
             return True
 
     return False
@@ -136,7 +134,7 @@ def communicate_with_server():
 
         s.sendto(message,server)
 
-        print(message)
+        print('*ping*')
 
         if(first_itteration):
             put_in_db = '1' #Tells server not to ubdate db

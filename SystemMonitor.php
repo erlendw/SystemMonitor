@@ -29,8 +29,15 @@ $selct_db = mysql_select_db('location_id') or die ('database not found');
             echo "Id: ";
             echo $row['id'];
             echo "<br>";
-            echo "Status: ";
-            if ($row['status'] == '1') {
+            echo "Status PC: ";
+            if ($row['computer_status'] == '1') {
+                echo "OPPE";
+            } else {
+                echo "NEDE";
+            }
+            echo "<br>";
+            echo "Status SOFTWARE: ";
+            if ($row['program_status'] == '1') {
                 echo "OPPE";
             } else {
                 echo "NEDE";

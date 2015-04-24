@@ -12,9 +12,6 @@ user_password = '***'
 name_of_db = 'location_id'
 
 
-
-
-
 def try_connection():
 
     try:
@@ -30,7 +27,6 @@ def try_connection():
 
     else:
         connection.close()
-
 
 def send_id_to_id_db(location):
 
