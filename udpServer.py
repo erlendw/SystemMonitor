@@ -39,7 +39,7 @@ def recieve_data_from_client(local_socket):
 
         location_id = to_check[0]
         first_itteration = to_check[1]
-        task_status = to_check[3]
+        task_status = to_check[2]
 
         if(task_status == '1'):
             id_database.update__status__program(location_id,'1')
@@ -58,7 +58,7 @@ def recieve_data_from_client(local_socket):
 
         else:
 
-            isActive = id_database.check_status(location_id)
+            isActive = id_database.check_computer_status(location_id)
 
             if not isActive:
 

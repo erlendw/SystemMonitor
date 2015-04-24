@@ -38,8 +38,8 @@ def send_id_to_id_db(location):
     cursor = connection.cursor()
 
 
-    add_location = ("INSERT INTO assosiate_location_with_id" " (location,id,status,time) "  "VALUES (%s,%s,%s,%s)")
-    data_location = (location, 'NULL', '0','0') #location has to be dynamic
+    add_location = ("INSERT INTO assosiate_location_with_id" " (location,id,computer_status,program_status,time) "  "VALUES (%s,%s,%s,%s,%s)")
+    data_location = (location, 'NULL', '0','0','0') #location has to be dynamic
 
     cursor.execute(add_location, data_location)
     connection.commit()
@@ -80,12 +80,31 @@ def check_time(id): #should only use resources when ping is lost
 
     return outcome
 
-def check_status(id): #should only use resources when ping is lost
+def check_computer_status(id): #should only use resources when ping is lost
 
     connection = try_connection()
     cursor = connection.cursor()
 
-    query = ("SELECT status FROM  `assosiate_location_with_id` WHERE  `id` =" + id)
+    query = ("SELECT computer_status FROM  `assosiate_location_with_id` WHERE  `id` =" + id)
+
+    cursor.execute(query)
+
+    result = cursor.fetchone()
+
+    outcome = str(result[0])
+
+    if(outcome == '0'):
+        return False
+
+    else:
+        return True
+
+def check_program_status(id): #should only use resources when ping is lost
+
+    connection = try_connection()
+    cursor = connection.cursor()
+
+    query = ("SELECT program_status FROM  `assosiate_location_with_id` WHERE  `id` =" + id)
 
     cursor.execute(query)
 
