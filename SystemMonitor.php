@@ -2,16 +2,11 @@
 
 $db_host = "localhost";
 $db_user = "root";
-$db_pass = "hp36565a";
-
-
-
+$db_pass = "***";
 
 $db_connection = mysql_connect($db_host,$db_user,$db_pass) or die ("could not connect");
 
 $selct_db = mysql_select_db('location_id') or die ('database not found');
-
-
 
     if ($db_connection && $selct_db) {
 
@@ -44,5 +39,7 @@ $selct_db = mysql_select_db('location_id') or die ('database not found');
             }
         }
 
+
 }
 ?>
+

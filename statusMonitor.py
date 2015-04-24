@@ -19,7 +19,7 @@ def confirm_status(id):
 
         print('Time scince last ping from ' + id + ' is ' + str(result) + ' second(s)')
 
-        if(result>=10):
+        if(result >= 10):
             break
 
         zzz(1)
