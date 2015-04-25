@@ -16,27 +16,47 @@ $selct_db = mysql_select_db('location_id') or die ('database not found');
 
         while ($row = mysql_fetch_assoc($fetch)) {
 
-            echo "<br>";
-            echo "<br>";
+
+            if ($row['computer_status'] == '1' && $row['program_status'] == '1'){
+
+                echo "<div class='location_area_green'>";
+
+            }
+
+            if ($row['computer_status'] == '1' && $row['program_status'] == '0'){
+
+                echo "<div class='location_area_yellow'>";
+
+            }
+
+            if ($row['computer_status'] == '0' && $row['program_status'] == '0'){
+
+                echo "<div class='location_area_red'>";
+
+            }
+
+
+
             echo "Lokasjon: ";
             echo $row['location'];
             echo "<br>";
             echo "Id: ";
             echo $row['id'];
             echo "<br>";
-            echo "Status PC: ";
+            echo "Status pc: ";
             if ($row['computer_status'] == '1') {
                 echo "OPPE";
             } else {
                 echo "NEDE";
             }
             echo "<br>";
-            echo "Status SOFTWARE: ";
+            echo "Status software: ";
             if ($row['program_status'] == '1') {
                 echo "OPPE";
             } else {
                 echo "NEDE";
             }
+            echo "</div>";
         }
 
 

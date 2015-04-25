@@ -1,0 +1,51 @@
+body,html{
+
+    padding: 0;
+    margin: 0;
+    background-color: skyblue;
+
+
+}
+
+.mid_block{
+
+    padding-top: 5%;
+    margin-left: 50%;
+    margin-right: 50%;
+    width: 270px;
+    font-size: 19px;
+
+}
+
+.location_area_green{
+
+    margin-top: 25px;
+    padding: 10px;
+    background-color: rgba(0, 255, 0, 0.5);
+    border-radius: 3px;
+    font-family: 'Roboto Condensed', sans-serif;
+
+
+}
+
+.location_area_yellow{
+
+    margin-top: 25px;
+    padding: 10px;
+    background-color: rgba(255, 255, 0, 0.5);
+    border-radius: 3px;
+    font-family: 'Roboto Condensed', sans-serif;
+
+
+}
+
+.location_area_red{
+
+    margin-top: 25px;
+    padding: 10px;
+    background-color: rgba(255, 0, 0, 0.5);
+    border-radius: 3px;
+    font-family: 'Roboto Condensed', sans-serif;
+
+
+}

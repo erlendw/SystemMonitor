@@ -1,5 +1,6 @@
 <html>
 <head>
+
     <script>
         function showUser() {
 
@@ -16,22 +17,29 @@
                         document.getElementById("txtHint").innerHTML = xmlhttp.responseText;
                     }
                 }
+
+
                 xmlhttp.open("GET","SystemMonitor.php",true);
                 xmlhttp.send();
-
         }
 
         function interval(){
-
             window.setInterval("showUser()", 10*1000);
         }
     </script>
+
+    <link rel="stylesheet" type="text/css" href="SM_styles.css">
+
+    <link href='http://fonts.googleapis.com/css?family=Roboto+Condensed' rel='stylesheet' type='text/css'>
 </head>
 <body>
 
-<br>
-<div id="txtHint"><b>Person info will be listed here...</b></div>
 
+<article class="mid_block">
+
+<div id="txtHint"><b></b></div>
+
+</article>
 </body>
 </html>
 
