@@ -9,6 +9,7 @@ import datetime
 #variables for server
 host = '178.62.12.142'
 port = 5000
+import mailOnFail
 
 def welcomeMessage():
     print ("\n\n\nWelcome to <SYSTEM MONITOR> <v1.0.0>\n\n\n")
@@ -29,6 +30,7 @@ def getCurrentTime():
 
 def recieve_data_from_client(local_socket):
 
+    isSent = False
 
     while True:
 
@@ -43,9 +45,13 @@ def recieve_data_from_client(local_socket):
 
         if(task_status == '1'):
             id_database.update__status__program(location_id,'1')
+            isSent = False
         elif(task_status == '0'):
             id_database.update__status__program(location_id,'0')
 
+            if not(isSent):
+                mailOnFail.mailOnFail(location_id, 'not recording!')
+                isSent = True
 
         if(first_itteration == '0'):
             id_database.send_id_to_id_db(location_id)

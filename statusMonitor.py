@@ -3,8 +3,7 @@ __author__ = 'erlend'
 from time import sleep as zzz
 import udpServer
 import id_db
-import datetime
-
+import mailOnFail
 
 
 def confirm_status(id):
@@ -37,6 +36,8 @@ def confirm_status(id):
     print('CLIENT WITH ID: ' + id + ' IS DOWN!')
     id_db.update__status(id,'0')
     id_db.update__status__program(id,'0')
+    mailOnFail.mailOnFail(id, 'DOWN!')
+    return
 
 
 
