@@ -92,7 +92,7 @@ def testForProcess():
     processList = findRunningProcesses()
 
     for i in range(len(processList)):
-        if(processList[i] == 'vlc.exe'): #process is hardcoded for now
+        if(processList[i] == 'ManagementApplication.exe'): #process is hardcoded for now
             return True
 
     return False
