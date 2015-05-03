@@ -9,6 +9,9 @@ import mailOnFail
 def confirm_status(id):
 
     control_variable = 300
+    isSent = False
+
+
 
     while True:
 
@@ -19,6 +22,15 @@ def confirm_status(id):
         result = int(current_system_time) - int(last_ping_time)
 
         control_variable = last_ping_time
+
+        programstatus = id_db.check_program_status(id)
+
+        if(programstatus == False and isSent == False):
+            mailOnFail.mailOnFail(id,' is not recording!')
+            isSent = True
+
+        if(programstatus == True):
+            isSent = False
 
         print('Time scince last ping from ' + id + ' is ' + str(result) + ' second(s)')
 
