@@ -1,7 +1,7 @@
 __author__ = 'erlend'
 
 import smtplib
-
+import id_db
 
 
 def mailOnFail(id, message):
@@ -12,5 +12,7 @@ def mailOnFail(id, message):
     mail.starttls()
     mail.login('erlendwestbye@gmail.com', '***')
 
-    mail.sendmail('erlendwestbye@gmail.com','erlendwestbye@gmail.com', id + ' '+ message)#Please check website for current status\n http://erlendwestbye.me/systemmonitor/'
+    location = id_db.get_location_name(id)
+
+    mail.sendmail('erlendwestbye@gmail.com','erlendwestbye@gmail.com', str(location) + ' ' + message)#Please check website for current status\n http://erlendwestbye.me/systemmonitor/'
     mail.close()

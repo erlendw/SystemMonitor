@@ -158,3 +158,20 @@ def update__status__program(location, value):
 
     cursor.close()
     connection.close()
+
+
+def get_location_name(id):
+
+
+    connection = try_connection()
+    cursor = connection.cursor()
+
+    query = ("SELECT location FROM  `assosiate_location_with_id` WHERE  `id` =" + id)
+
+    cursor.execute(query)
+
+    result = cursor.fetchone()
+
+    outcome = str(result[0])
+
+    return outcome

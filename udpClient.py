@@ -4,7 +4,6 @@ from time import sleep as zzz
 import socket
 import pickle
 import subprocess
-import re
 
 server_ip = '178.62.12.142'
 server_port = 5000

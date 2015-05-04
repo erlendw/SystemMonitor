@@ -30,7 +30,7 @@ def getCurrentTime():
 
 def recieve_data_from_client(local_socket):
 
-    isSent = False
+
 
     while True:
 

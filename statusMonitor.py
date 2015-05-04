@@ -11,7 +11,7 @@ def confirm_status(id):
     control_variable = 300
     isSent = False
 
-
+    mailOnFail.mailOnFail(id,' is UP!')
 
     while True:
 
@@ -29,8 +29,8 @@ def confirm_status(id):
             mailOnFail.mailOnFail(id,' is not recording!')
             isSent = True
 
-        if(programstatus == True):
-            isSent = False
+        if(programstatus == True and isSent == True):
+            mailOnFail.mailOnFail(id,' is now recording again!')
 
         print('Time scince last ping from ' + id + ' is ' + str(result) + ' second(s)')
 
@@ -48,7 +48,7 @@ def confirm_status(id):
     print('CLIENT WITH ID: ' + id + ' IS DOWN!')
     id_db.update__status(id,'0')
     id_db.update__status__program(id,'0')
-    mailOnFail.mailOnFail(id, 'DOWN!')
+    mailOnFail.mailOnFail(id, ' is DOWN!')
     return
 
 
