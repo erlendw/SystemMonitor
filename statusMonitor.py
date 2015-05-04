@@ -2,11 +2,11 @@ __author__ = 'erlend'
 
 from time import sleep as zzz
 import udpServer
-import id_db
+import databaseHandeling as dbh
 import mailOnFail
 
 
-def confirm_status(id):
+def confirmStatus(id):
 
     control_variable = 300
     isSent = False
@@ -17,13 +17,13 @@ def confirm_status(id):
 
         current_system_time = udpServer.getCurrentTime()
 
-        last_ping_time = id_db.check_time(id)
+        last_ping_time = dbh.checkTime(id)
 
         result = int(current_system_time) - int(last_ping_time)
 
         control_variable = last_ping_time
 
-        programstatus = id_db.check_program_status(id)
+        programstatus = dbh.checkProgramStatus(id)
 
         if(programstatus == False and isSent == False):
             mailOnFail.mailOnFail(id,' is not recording!')
@@ -39,15 +39,15 @@ def confirm_status(id):
 
         if(result<0 and (last_ping_time == control_variable)): #handles the situation where result is stuck at >0
             zzz(4)
-            if((id_db.check_time(id)) == control_variable):
+            if((dbh.checkTime(id)) == control_variable):
                 break
 
         zzz(5)
 
 
     print('CLIENT WITH ID: ' + id + ' IS DOWN!')
-    id_db.update__status(id,'0')
-    id_db.update__status__program(id,'0')
+    dbh.updateComputerStatus(id,'0')
+    dbh.updateProgramStatus(id,'0')
     mailOnFail.mailOnFail(id, ' is DOWN!')
     return
 

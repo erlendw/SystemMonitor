@@ -1,7 +1,7 @@
 __author__ = 'erlend'
 
 import socket
-import id_db as id_database
+import databaseHandeling as dbh
 import statusMonitor
 from threading import Thread
 import datetime
@@ -14,7 +14,7 @@ port = 5000
 def welcomeMessage():
     print ("\n\n\nWelcome to <SYSTEM MONITOR> <v1.0.0>\n\n\n")
 
-def bind_socket():
+def bindSocket():
 
     local_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     local_socket.bind((host,port))
@@ -28,13 +28,13 @@ def getCurrentTime():
 
         return time_now
 
-def recieve_data_from_client(local_socket):
+def recieveDataFromClient(localsocket):
 
 
 
     while True:
 
-        data, addr = local_socket.recvfrom(1024)
+        data, addr = localsocket.recvfrom(1024)
         data = bytes.decode(data)
 
         to_check = data.split(',')
@@ -44,52 +44,48 @@ def recieve_data_from_client(local_socket):
         task_status = to_check[2]
 
         if(task_status == '1'):
-            id_database.update__status__program(location_id,'1')
+            dbh.updateProgramStatus(location_id,'1')
 
         elif(task_status == '0'):
-            id_database.update__status__program(location_id,'0')
+            dbh.updateProgramStatus(location_id,'0')
 
 
         if(first_itteration == '0'):
-            id_database.send_id_to_id_db(location_id)
-            location_id = id_database.recieve_id_from_db()
+            dbh.sendIdToDatabase(location_id)
+            location_id = dbh.recieveIdFromDatabase()
 
             print('\n' + location_id + " was accepted to the database\n")
-            local_socket.sendto(str.encode(location_id),addr)
+            localsocket.sendto(str.encode(location_id),addr)
 
-            id_database.update__time(location_id,getCurrentTime())
+            dbh.updateTime(location_id,getCurrentTime())
 
         else:
 
             try:
-                isActive = id_database.check_computer_status(location_id)
+                isActive = dbh.checkComputerStatus(location_id)
             except Exception as e:
                 isActive = False
 
             if not isActive:
 
-                id_database.update__status(location_id,'1')
-                id_database.update__time(location_id,getCurrentTime())
+                dbh.updateComputerStatus(location_id,'1')
+                dbh.updateTime(location_id,getCurrentTime())
 
-                t = Thread(target=statusMonitor.confirm_status,args=(location_id))
+                t = Thread(target=statusMonitor.confirmStatus,args=(location_id))
                 t.start()
 
             if isActive:
 
-                id_database.update__time(location_id,getCurrentTime())
+                dbh.updateTime(location_id,getCurrentTime())
 
 
-    local_socket.close()
-
-def pass_data_to_id_db(data):
-
-    id_database.try_connection(data)
+    localsocket.close()
 
 
 def Main():
 
     welcomeMessage()
-    recieve_data_from_client(bind_socket())
+    recieveDataFromClient(bindSocket())
 
 
 if __name__ == '__main__':

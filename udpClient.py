@@ -9,7 +9,7 @@ import re
 server_ip = '178.62.12.142'
 server_port = 5000
 
-def give_id():
+def giveId():
 
     while True:
         location = input('Where is this recorder located? ')
@@ -75,6 +75,7 @@ def testIp():
         return False
 
 def findRunningProcesses():
+
     processList = []
 
     cmd = 'WMIC PROCESS get Caption'
@@ -97,7 +98,7 @@ def testForProcess():
 
     return False
 
-def communicate_with_server():
+def sendInfoToServer():
 
     first_itteration = testIp()
 
@@ -111,7 +112,7 @@ def communicate_with_server():
 
     if(first_itteration):
 
-        location_id = give_id()
+        location_id = giveId()
         put_in_db = '0'
 
     if not (first_itteration):
@@ -156,7 +157,7 @@ def communicate_with_server():
 def Main():
 
     findRunningProcesses()
-    communicate_with_server()
+    sendInfoToServer()
 
 
 if __name__ == '__main__':

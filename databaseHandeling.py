@@ -12,7 +12,7 @@ user_password = '***'
 name_of_db = 'location_id'
 
 
-def try_connection():
+def tryConnection():
 
     try:
         connection = mysql_conn.connect(user=user_log_in,password=user_password,host=host_of_db,database=name_of_db)
@@ -28,9 +28,9 @@ def try_connection():
     else:
         connection.close()
 
-def send_id_to_id_db(location):
+def sendIdToDatabase(location):
 
-    connection = try_connection()
+    connection = tryConnection()
     cursor = connection.cursor()
 
 
@@ -43,8 +43,8 @@ def send_id_to_id_db(location):
     cursor.close()
     connection.close()
 
-def recieve_id_from_db():
-    connection = try_connection()
+def recieveIdFromDatabase():
+    connection = tryConnection()
     cursor = connection.cursor()
 
     query = ("SELECT COUNT(*) FROM assosiate_location_with_id")
@@ -61,9 +61,9 @@ def recieve_id_from_db():
 
     return str(id)
 
-def check_time(id): #should only use resources when ping is lost
+def checkTime(id): #should only use resources when ping is lost
 
-    connection = try_connection()
+    connection = tryConnection()
     cursor = connection.cursor()
 
     query = ("SELECT time FROM  `assosiate_location_with_id` WHERE  `id` =" + id)
@@ -76,9 +76,9 @@ def check_time(id): #should only use resources when ping is lost
 
     return outcome
 
-def check_computer_status(id): #should only use resources when ping is lost
+def checkComputerStatus(id): #should only use resources when ping is lost
 
-    connection = try_connection()
+    connection = tryConnection()
     cursor = connection.cursor()
 
     query = ("SELECT computer_status FROM  `assosiate_location_with_id` WHERE  `id` =" + id)
@@ -95,9 +95,9 @@ def check_computer_status(id): #should only use resources when ping is lost
     else:
         return True
 
-def check_program_status(id): #should only use resources when ping is lost
+def checkProgramStatus(id): #should only use resources when ping is lost
 
-    connection = try_connection()
+    connection = tryConnection()
     cursor = connection.cursor()
 
     query = ("SELECT program_status FROM  `assosiate_location_with_id` WHERE  `id` =" + id)
@@ -114,9 +114,9 @@ def check_program_status(id): #should only use resources when ping is lost
     else:
         return True
 
-def update__time(location, time):
+def updateTime(location, time):
 
-    connection = try_connection()
+    connection = tryConnection()
     cursor = connection.cursor()
 
 
@@ -129,9 +129,9 @@ def update__time(location, time):
     cursor.close()
     connection.close()
 
-def update__status(location, value):
+def updateComputerStatus(location, value):
 
-    connection = try_connection()
+    connection = tryConnection()
     cursor = connection.cursor()
 
 
@@ -144,9 +144,9 @@ def update__status(location, value):
     cursor.close()
     connection.close()
 
-def update__status__program(location, value):
+def updateProgramStatus(location, value):
 
-    connection = try_connection()
+    connection = tryConnection()
     cursor = connection.cursor()
 
 
@@ -160,10 +160,10 @@ def update__status__program(location, value):
     connection.close()
 
 
-def get_location_name(id):
+def getLocationName(id):
 
 
-    connection = try_connection()
+    connection = tryConnection()
     cursor = connection.cursor()
 
     query = ("SELECT location FROM  `assosiate_location_with_id` WHERE  `id` =" + id)
