@@ -61,7 +61,10 @@ def recieve_data_from_client(local_socket):
 
         else:
 
-            isActive = id_database.check_computer_status(location_id)
+            try:
+                isActive = id_database.check_computer_status(location_id)
+            except Exception as e:
+                isActive = False
 
             if not isActive:
 

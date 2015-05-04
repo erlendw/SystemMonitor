@@ -4,6 +4,7 @@ from time import sleep as zzz
 import socket
 import pickle
 import subprocess
+import re
 
 server_ip = '178.62.12.142'
 server_port = 5000
@@ -129,6 +130,8 @@ def communicate_with_server():
             isRunning = '0'
 
         message = str.encode(location_id + ',' + put_in_db + ',' + isRunning)
+
+        print(message)
 
         s.sendto(message,server)
 
