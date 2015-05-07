@@ -43,7 +43,7 @@ def confirmStatus(id): # this is used to monitor the status of the computer via 
 
         print('Time scince last ping from ' + id + ' is ' + str(result) + ' second(s)')
 
-        if(result >= 10):
+        if(result >= 10): ## Denne skal oppdateres til 15 min i ferdig versjon etter testing hos kunde
             break
 
         if(result<0 and (last_ping_time == control_variable)): #handles the situation where result is stuck at >0

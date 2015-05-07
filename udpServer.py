@@ -24,7 +24,7 @@ def bindSocket(): ## binds socket to host and port of the digital ocean server
 def getCurrentTime(): ## Finds the current system time on the server
 
         time_now = datetime.datetime.now()
-        time_now = (time_now.strftime('%S'))
+        time_now = (time_now.strftime('%S')) ## skal oppdateres til %H%M%S
 
         return time_now
 

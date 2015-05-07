@@ -146,7 +146,7 @@ def sendInfoToServer(): ## sends all needed info to server, as well as recieving
             pickle.dump(location_id,open('id.p', 'wb'))
             print('server svarte med id: ' + location_id)
 
-        zzz(3)
+        zzz(3) ## skal oppdateres til 7.5 min eller 8 ganger i timen
 
     s.close()
 
