@@ -14,5 +14,5 @@ def mailOnFail(id, message):
 
     location = dbh.getLocationName(id)
 
-    mail.sendmail('erlendwestbye@gmail.com','erlendwestbye@gmail.com', str(location) + ' ' + message)#Please check website for current status\n http://erlendwestbye.me/systemmonitor/'
+    mail.sendmail('erlendwestbye@gmail.com','erlendwestbye@gmail.com','Subject: Pro Tech SystemMonitor\n' + str(location) + ' ' + message)#Please check website for current status\n http://erlendwestbye.me/systemmonitor/'
     mail.close()

@@ -9,7 +9,7 @@ import re
 server_ip = '178.62.12.142'
 server_port = 5000
 
-def giveId():
+def giveId(): ## returns the name of the location so that server can assign an id
 
     while True:
         location = input('Where is this recorder located? ')
@@ -38,7 +38,7 @@ def giveId():
 
     return location
 
-def getLocalIp():
+def getLocalIp(): ## finds the local ip of the recorder/client machine
 
     computer_name = socket.gethostname()
 
@@ -52,7 +52,7 @@ def getLocalIp():
 
     return ip
 
-def testIp():
+def testIp(): ## checks if the ip is different from last boot
 
     current_ip = getLocalIp()
 
@@ -74,7 +74,7 @@ def testIp():
 
         return False
 
-def findRunningProcesses():
+def findRunningProcesses(): ## finds the running the running processes (windows only)
 
     processList = []
 
@@ -88,7 +88,7 @@ def findRunningProcesses():
 
     return processList
 
-def testForProcess():
+def testForProcess(): ## itterates over all processes to check for desired process (hardcoded)
 
     processList = findRunningProcesses()
 
@@ -98,7 +98,7 @@ def testForProcess():
 
     return False
 
-def sendInfoToServer():
+def sendInfoToServer(): ## sends all needed info to server, as well as recieving and saving the assigned id
 
     first_itteration = testIp()
 
@@ -132,8 +132,6 @@ def sendInfoToServer():
 
         message = str.encode(location_id + ',' + put_in_db + ',' + isRunning)
 
-        print(message)
-
         s.sendto(message,server)
 
         print('*ping*')
@@ -147,8 +145,6 @@ def sendInfoToServer():
 
             pickle.dump(location_id,open('id.p', 'wb'))
             print('server svarte med id: ' + location_id)
-
-
 
         zzz(3)
 

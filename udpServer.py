@@ -11,26 +11,24 @@ host = '178.62.12.142'
 port = 5000
 
 
-def welcomeMessage():
+def welcomeMessage(): ## prints welcome message
     print ("\n\n\nWelcome to <SYSTEM MONITOR> <v1.0.0>\n\n\n")
 
-def bindSocket():
+def bindSocket(): ## binds socket to host and port of the digital ocean server
 
     local_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     local_socket.bind((host,port))
 
     return local_socket
 
-def getCurrentTime():
+def getCurrentTime(): ## Finds the current system time on the server
 
         time_now = datetime.datetime.now()
         time_now = (time_now.strftime('%S'))
 
         return time_now
 
-def recieveDataFromClient(localsocket):
-
-
+def recieveDataFromClient(localsocket): ## Listens for info from recorders
 
     while True:
 
@@ -51,10 +49,11 @@ def recieveDataFromClient(localsocket):
 
 
         if(first_itteration == '0'):
-            dbh.sendIdToDatabase(location_id)
-            location_id = dbh.recieveIdFromDatabase()
+            dbh.sendLocationToDatabase(location_id)
+            location_id = dbh.recieveIdFromDatabase(location_id)
 
             print('\n' + location_id + " was accepted to the database\n")
+            dbh.setTimeOfDeath(location_id,statusMonitor.setTimeOfDeath())
             localsocket.sendto(str.encode(location_id),addr)
 
             dbh.updateTime(location_id,getCurrentTime())

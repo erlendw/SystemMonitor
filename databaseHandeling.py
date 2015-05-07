@@ -12,7 +12,7 @@ user_password = '***'
 name_of_db = 'location_id'
 
 
-def tryConnection():
+def tryConnection(): ## tests the database connection
 
     try:
         connection = mysql_conn.connect(user=user_log_in,password=user_password,host=host_of_db,database=name_of_db)
@@ -28,7 +28,7 @@ def tryConnection():
     else:
         connection.close()
 
-def sendIdToDatabase(location):
+def sendLocationToDatabase(location):
 
     connection = tryConnection()
     cursor = connection.cursor()
@@ -43,11 +43,11 @@ def sendIdToDatabase(location):
     cursor.close()
     connection.close()
 
-def recieveIdFromDatabase():
+def recieveIdFromDatabase(location):
     connection = tryConnection()
     cursor = connection.cursor()
 
-    query = ("SELECT COUNT(*) FROM assosiate_location_with_id")
+    query = ("SELECT id FROM  `assosiate_location_with_id` WHERE  `location` =" + location)
 
     cursor.execute(query)
 
@@ -162,11 +162,40 @@ def updateProgramStatus(location, value):
 
 def getLocationName(id):
 
-
     connection = tryConnection()
     cursor = connection.cursor()
 
     query = ("SELECT location FROM  `assosiate_location_with_id` WHERE  `id` =" + id)
+
+    cursor.execute(query)
+
+    result = cursor.fetchone()
+
+    outcome = str(result[0])
+
+    return outcome
+
+def setTimeOfDeath(location,time):
+
+    connection = tryConnection()
+    cursor = connection.cursor()
+
+
+    insert_new_bool = ("UPDATE assosiate_location_with_id SET timeofdeath = %s WHERE id = %s ")
+    data_location = (time,location) #location has to be dynamic
+
+    cursor.execute(insert_new_bool, data_location)
+    connection.commit()
+
+    cursor.close()
+    connection.close()
+
+def getTimeOfDeath(id):
+
+    connection = tryConnection()
+    cursor = connection.cursor()
+
+    query = ("SELECT timeofdeath FROM  `assosiate_location_with_id` WHERE  `id` =" + id)
 
     cursor.execute(query)
 

@@ -4,9 +4,17 @@ from time import sleep as zzz
 import udpServer
 import databaseHandeling as dbh
 import mailOnFail
+import datetime
+
+def setTimeOfDeath(): #different formatting from method in udpServerm, finds exact time of death
+
+        time_now = datetime.datetime.now()
+        time_now = (time_now.strftime('%d%m%Y%H%M%S'))
+
+        return time_now
 
 
-def confirmStatus(id):
+def confirmStatus(id): # this is used to monitor the status of the computer via the database hosted on digitalocean
 
     control_variable = 300
     isSent = False
@@ -26,7 +34,7 @@ def confirmStatus(id):
         programstatus = dbh.checkProgramStatus(id)
 
         if(programstatus == False and isSent == False):
-            mailOnFail.mailOnFail(id,' is not recording!')
+            mailOnFail.mailOnFail(id,' is not recording! Timecode - ' + dbh.getTimeOfDeath(id))
             isSent = True
 
         if(programstatus == True and isSent == True):
@@ -48,7 +56,8 @@ def confirmStatus(id):
     print('CLIENT WITH ID: ' + id + ' IS DOWN!')
     dbh.updateComputerStatus(id,'0')
     dbh.updateProgramStatus(id,'0')
-    mailOnFail.mailOnFail(id, ' is DOWN!')
+    dbh.setTimeOfDeath(id,setTimeOfDeath())
+    mailOnFail.mailOnFail(id, ' is DOWN! Timecode - ' + dbh.getTimeOfDeath(id))
     return
 
 
