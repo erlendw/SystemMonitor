@@ -93,7 +93,7 @@ def testForProcess(): ## itterates over all processes to check for desired proce
     processList = findRunningProcesses()
 
     for i in range(len(processList)):
-        if(processList[i] == 'ManagementApplication.exe'): #process is hardcoded for now
+        if(processList[i] == 'RecordingServerManager.exe'): #process is hardcoded for now
             return True
 
     return False
