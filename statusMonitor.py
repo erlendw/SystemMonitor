@@ -39,6 +39,7 @@ def confirmStatus(id): # this is used to monitor the status of the computer via 
 
         if(programstatus == True and isSent == True):
             mailOnFail.mailOnFail(id,' is now recording again!')
+            isSent = False
 
         print('Time scince last ping from ' + id + ' is ' + str(result) + ' second(s)')
 
